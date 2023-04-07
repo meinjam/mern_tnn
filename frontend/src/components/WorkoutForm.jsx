@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 
-const WorkoutForm = () => {
+const WorkoutForm = ({ setWorkouts }) => {
   const [title, setTitle] = useState('');
   const [load, setLoad] = useState('');
   const [reps, setReps] = useState('');
@@ -15,32 +15,16 @@ const WorkoutForm = () => {
     await axios
       .post('/api/workouts', workout)
       .then((resp) => {
-        // console.log(resp.data);
+        setWorkouts((prevState) => [resp.data, ...prevState]);
+        setError(null);
+        setTitle('');
+        setLoad('');
+        setReps('');
       })
       .catch((error) => {
         // console.log(error.response);
         setError(error?.response?.data?.error);
       });
-
-    // const response = await fetch('/api/workouts', {
-    //   method: 'POST',
-    //   body: JSON.stringify(workout),
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // });
-    // const json = await response.json();
-
-    // if (!response.ok) {
-    //   setError(json.error);
-    // }
-    // if (response.ok) {
-    //   setError(null);
-    //   setTitle('');
-    //   setLoad('');
-    //   setReps('');
-    //   console.log('new workout added:', json);
-    // }
   };
 
   return (

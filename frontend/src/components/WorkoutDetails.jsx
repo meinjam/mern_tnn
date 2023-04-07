@@ -1,4 +1,19 @@
-const WorkoutDetails = ({ workout }) => {
+import axios from 'axios';
+
+const WorkoutDetails = ({ workout, setWorkouts }) => {
+  const handleClick = async () => {
+    await axios
+      .delete(`/api/workouts/${workout.id}`)
+      .then((resp) => {
+        // console.log(resp.data);
+        // setWorkouts(resp.data);
+        setWorkouts((prevState) => prevState.filter((f) => f.id !== resp.data.id));
+      })
+      .catch((error) => {
+        // console.log(error.response);
+      });
+  };
+
   return (
     <div className='workout-details'>
       <h4>{workout.title}</h4>
@@ -11,6 +26,7 @@ const WorkoutDetails = ({ workout }) => {
         {workout.reps}
       </p>
       <p>{workout.createdAt}</p>
+      <span onClick={handleClick}>delete</span>
     </div>
   );
 };

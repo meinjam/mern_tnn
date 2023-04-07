@@ -9,24 +9,26 @@ const Home = () => {
   useEffect(() => {
     fetchWorkouts();
   }, []);
+
   const fetchWorkouts = async () => {
     await axios
       .get('/api/workouts')
       .then((resp) => {
-        console.log(resp.data);
+        // console.log(resp.data);
         setWorkouts(resp.data);
       })
       .catch((error) => {
-        console.log(error.response);
+        // console.log(error.response);
       });
   };
 
   return (
     <div className='home'>
       <div className='workouts'>
-        {workouts && workouts.map((workout) => <WorkoutDetails workout={workout} key={workout.id} />)}
+        {workouts &&
+          workouts.map((workout) => <WorkoutDetails workout={workout} setWorkouts={setWorkouts} key={workout.id} />)}
       </div>
-      <WorkoutForm />
+      <WorkoutForm setWorkouts={setWorkouts} />
     </div>
   );
 };
