@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment';
 
 const WorkoutDetails = ({ workout, setWorkouts }) => {
   const handleClick = async () => {
@@ -25,8 +26,10 @@ const WorkoutDetails = ({ workout, setWorkouts }) => {
         <strong>Number of reps: </strong>
         {workout.reps}
       </p>
-      <p>{workout.createdAt}</p>
-      <span onClick={handleClick}>delete</span>
+      <p>{moment(workout.createdAt).fromNow()}</p>
+      <span onClick={handleClick} className='material-symbols-outlined'>
+        delete
+      </span>
     </div>
   );
 };
